@@ -19,7 +19,8 @@ export class ProductController extends BaseController {
   public async getProducts(_: Request, res: Response) {
     try {
       const products = await this.productService.getProducts();
-      res.status(200).send(products);
+      res.status(200);
+      res.send(products);
     } catch (error) {
       this.handleException(error, res);
     }
@@ -34,7 +35,8 @@ export class ProductController extends BaseController {
   ) {
     try {
       const result = await this.productService.buyProducts(req.body);
-      res.status(200).send(result);
+      res.status(200);
+      res.send(result);
     } catch (error) {
       this.handleException(error, res);
     }
@@ -47,7 +49,8 @@ export class ProductController extends BaseController {
       const { id } = req.params;
       const productFound = await this.productService.getProductById(+id);
 
-      res.status(200).send(productFound);
+      res.status(200);
+      res.send(productFound);
     } catch (error) {
       this.handleException(error, res);
     }
@@ -59,7 +62,8 @@ export class ProductController extends BaseController {
     try {
       const product = req.body;
       const createdProduct = await this.productService.createProduct(product);
-      res.status(201).send(createdProduct);
+      res.status(201);
+      res.send(createdProduct);
     } catch (error) {
       this.handleException(error, res);
     }
@@ -77,7 +81,8 @@ export class ProductController extends BaseController {
         +id,
         product
       );
-      res.status(200).send(updatedProduct);
+      res.status(200);
+      res.send(updatedProduct);
     } catch (error) {
       this.handleException(error, res);
     }
@@ -90,7 +95,8 @@ export class ProductController extends BaseController {
       const { id } = req.params;
 
       const restoredProduct = await this.productService.restoreProduct(+id);
-      res.send(200).send(restoredProduct);
+      res.send(200);
+      res.send(restoredProduct);
     } catch (error) {
       this.handleException(error, res);
     }
@@ -102,7 +108,8 @@ export class ProductController extends BaseController {
     try {
       const { id } = req.params;
       const deletedProduct = await this.productService.deleteProduct(+id);
-      res.status(200).send(deletedProduct);
+      res.status(200);
+      res.send(deletedProduct);
     } catch (error) {
       this.handleException(error, res);
     }

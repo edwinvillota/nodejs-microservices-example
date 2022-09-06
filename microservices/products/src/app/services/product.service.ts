@@ -1,4 +1,5 @@
-import axios from "axios";
+import { AwilixContainer } from "awilix";
+import { ModelStatic } from "sequelize/types";
 import { OrderProduct } from "../common/clients/orders/dto/create-order.dto";
 import { OrderClient } from "../common/clients/orders/order-client";
 import { ConflictException } from "../common/exceptions/conflict-exception";
@@ -7,10 +8,13 @@ import { ProductDto } from "../dto/product.dto";
 import { Product } from "../models/product.model";
 
 export class ProductService {
-  constructor(private readonly orderClient: OrderClient) {}
+  constructor(
+    private readonly orderClient: OrderClient,
+    private readonly productModel: ModelStatic<Product>
+  ) {}
 
   private findProductById(id: number) {
-    return Product.findByPk(id);
+    return this.productModel.findByPk(id);
   }
 
   public async getProductById(id: number) {
@@ -24,11 +28,11 @@ export class ProductService {
   }
 
   public async getProducts() {
-    return Product.findAll({ where: { deleted: false } });
+    return this.productModel.findAll({ where: { deleted: false } });
   }
 
   public async createProduct(product: ProductDto) {
-    const newProduct = Product.build(product);
+    const newProduct = this.productModel.build(product);
     return newProduct.save();
   }
 
